@@ -61,6 +61,7 @@ TEST_CASE("Example: Create a new account", "[ex-1]") {
 
 TEST_CASE("Example: Simple widthdraw", "[ex-2]") {
   Atm atm;
+  int temp = 12345678;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
   atm.WithdrawCash(12345678, 1234, 20);
   auto accounts = atm.GetAccounts();
@@ -71,12 +72,13 @@ TEST_CASE("Example: Simple widthdraw", "[ex-2]") {
   REQUIRE(sam_account.balance == 280.30);
   bool threw = false;
   try {
-    atm.WithdrawCash(12345678, 1234, "Sam Sepiol", -50.00);
+    atm.WithdrawCash(temp, 1234, "Sam Sepiol", -50.00);
   } catch (const std::invalid_argument&) {
     threw = true;
   }
+  REQUIRE(threw);
   try {
-    atm.WithdrawCash(12345678, 1234, "Sam Sepiol", 400.00);
+    atm.WithdrawCash(temp, 1234, "Sam Sepiol", 400.00);
   } catch (const std::runtime_error&) {
     threw = true;
   }
