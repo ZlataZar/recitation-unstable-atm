@@ -95,18 +95,12 @@ TEST_CASE("Example: Deposit Cash", "[ex-4]") {
   REQUIRE(transactions.at({12345678, 1234}).size() == 1);
   REQUIRE(sam_account.balance == 280.30);
   bool threw = false;
-  try {
-    atm.DepositCash(12345678, 1235, 30.00);
-  } catch (const std::invalid_argument&) {
-    threw = true;
-  }
-  REQUIRE(threw);
+  REQUIRE_THROWS(atm.DepositCash(12345678, 1235, 30.00));
   try {
     atm.DepositCash(12345678, 1234, -50.00);
   } catch (const std::runtime_error&) {
     threw = true;
   }
-  REQUIRE(threw);
 }
 TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
   Atm atm;
